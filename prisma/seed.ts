@@ -64,6 +64,21 @@ async function main() {
     },
   });
 
+  // 先にcategoryを作る
+  const category = await prisma.category.create({
+    data: {
+      name: "category1",
+    },
+  });
+
+  // 作成したcategoryのidを指定してpostを作成
+  await prisma.post.create({
+    data: {
+      title: "post1",
+      categoryId: category.id,
+    }
+  });
+
   console.log({ alice, bob });
 }
 
