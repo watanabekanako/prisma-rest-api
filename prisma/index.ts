@@ -31,9 +31,7 @@ async function main() {
 
   // console.log(posts);
   const email = "alice@example.com";
-  const alice = await prisma.$queryRaw<User>(
-    `SELECT * FROM "postgres"."User" WHERE "postgres"."User"."email" = '${email}';`
-  );
+  const alice = await prisma.$queryRaw<User>`SELECT * FROM "User" WHERE "User"."email" = ${email};`;
   console.log(alice);
 }
 
