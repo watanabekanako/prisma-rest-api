@@ -46,9 +46,6 @@ async function main() {
     data: {
       name: "Alice",
       email: "alice@example.com",
-      posts: {
-        create: posts,
-      },
     },
   });
 
@@ -56,11 +53,6 @@ async function main() {
     data: {
       name: "Bob",
       email: "bob@example.com",
-      posts: {
-        create: {
-          title: "Check out Prisma with Next.js",
-        },
-      },
     },
   });
 
@@ -76,7 +68,7 @@ async function main() {
     data: {
       title: "post1",
       categoryId: category.id,
-    }
+    },
   });
 
   console.log({ alice, bob });
