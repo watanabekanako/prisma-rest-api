@@ -6,7 +6,11 @@ const router = Router();
 
 // POST /test
 router.post("/", async (req: Request, res: Response) => {
-  const test = await prisma.test.create;
+  const test = await prisma.test.create({
+    data: {
+      name: "hoge",
+    },
+  });
   res.json({ test });
 });
 
@@ -18,8 +22,23 @@ router.get("/", async (req: Request, res: Response) => {
 
 // DELETE /test
 router.delete("/", async (req: Request, res: Response) => {
-  const test = await prisma.test.findMany();
+  const test = await prisma.test.delete({
+    where: {
+      id: 3,
+    },
+  });
   res.json({ test });
 });
 
+//PUT /test
+router.put("/", async (req: Request, res: Response) => {
+  const test = await prisma.test.update({
+    where: {
+      id: 1,
+    },
+    data: {
+      name: "伊藤",
+    },
+  });
+});
 export default router;
