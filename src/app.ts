@@ -1,7 +1,7 @@
 import express from "express";
 // import { PrismaClient } from "@prisma/client";
 import userController from "./controllers/userController";
-import testController from "./controllers/userController";
+import testController from "./controllers/testController";
 // const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
@@ -15,5 +15,5 @@ app.get("/", (req, res) => {
 //   res.json({ users });
 // });
 // testControllerの記述
-app.use("test", testController);
+app.use("/test", testController);
 export default app;

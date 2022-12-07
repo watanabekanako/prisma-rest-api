@@ -10,4 +10,10 @@ router.post("/", async (req: Request, res: Response) => {
   res.json({ test });
 });
 
+// GET /test
+router.get("/", async (req: Request, res: Response) => {
+  const test = await prisma.test.findMany();
+  res.json({ test });
+});
+
 export default router;

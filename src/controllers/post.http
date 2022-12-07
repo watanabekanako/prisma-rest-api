@@ -9,4 +9,8 @@ Content-Type: application/json
 POST http://localhost:3000/test
 Content-Type: application/json
 
-{"name":"名前"}
+{"name": "名前","id": 1}
+
+###
+GET  http://localhost:3000/test
+Content-Type: application/json
