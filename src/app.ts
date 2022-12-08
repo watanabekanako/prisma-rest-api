@@ -16,9 +16,10 @@ const app = express();
 //   res.json({ users });
 // });
 // testControllerの記述
+app.use("/test", testController);
 
 const cors = require("cors");
-app.use("/test", testController);
+app.use(cors());
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   next();
