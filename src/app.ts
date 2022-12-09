@@ -19,9 +19,8 @@ const app = express();
 app.use("/test", testController);
 
 const cors = require("cors");
-app.use(cors());
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
 export default app;

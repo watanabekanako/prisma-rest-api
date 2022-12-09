@@ -28,7 +28,6 @@ async function main() {
   //   },
   //   include: { author: true },
   // });
-
   // console.log(posts);
   const email = "alice@example.com";
   const alice = await prisma.$queryRaw<User>`SELECT * FROM "User" WHERE "User"."email" = ${email};`;
