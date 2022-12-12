@@ -27,7 +27,7 @@ router.get("/", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   const test = await prisma.test.delete({
     where: {
-      id: req.params.id,
+      id: Number(req.params.id),
     },
   });
   res.json({ test });
