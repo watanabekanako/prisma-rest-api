@@ -5,7 +5,7 @@ import testController from "./controllers/testController";
 // const prisma = new PrismaClient();
 
 const app = express();
-// app.use(express.json());
+app.use(express.json());
 // app.use("/users", userController);
 // app.get("/", (req, res) => {
 //   res.writeHead(200, { "Content-Type": "text/plain" });

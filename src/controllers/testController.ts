@@ -1,15 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 import { Router, Request, Response } from "express";
+import { request } from "http";
 
 const prisma = new PrismaClient();
 const router = Router();
 
 // POST /test
 router.post("/", async (req: Request, res: Response) => {
+  console.log(req.body);
   const test = await prisma.test.create({
     data: {
-      name: "hoge",
+      name: req.body.name,
     },
+    // name:{id:1,name:"hoge"}
   });
   res.json({ test });
 });
@@ -21,10 +24,10 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 // DELETE /test
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const test = await prisma.test.delete({
     where: {
-      id: 3,
+      id: req.params.id,
     },
   });
   res.json({ test });
