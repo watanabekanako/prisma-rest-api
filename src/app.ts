@@ -2,6 +2,7 @@ import express from "express";
 // import { PrismaClient } from "@prisma/client";
 import userController from "./controllers/userController";
 import testController from "./controllers/testController";
+import postController from "./controllers/postController";
 // const prisma = new PrismaClient();
 
 const app = express();
@@ -17,8 +18,8 @@ app.use(express.json());
 // });
 // testControllerの記述
 app.use("/test", testController);
-// app.use("/post", postController);
-
+// postControllerの記述
+app.use("/posts", postController);
 const cors = require("cors");
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");

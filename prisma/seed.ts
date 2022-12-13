@@ -56,7 +56,7 @@ async function main() {
     },
   });
 
-  // 先にcategoryを作る
+  // 先にcategoryを作る;
   const category = await prisma.category.create({
     data: {
       name: "category1",
@@ -67,6 +67,12 @@ async function main() {
   await prisma.post.create({
     data: {
       title: "post1",
+      categoryId: category.id,
+    },
+  });
+  await prisma.post.create({
+    data: {
+      title: "post2",
       categoryId: category.id,
     },
   });

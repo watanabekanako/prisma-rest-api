@@ -47,7 +47,11 @@ router.put("/:id", async (req: Request, res: Response) => {
     where: {
       id: Number(req.params.id),
     },
+    data: {
+      name: req.body.name,
+    },
   });
   res.json({ test });
 });
+
 export default router;
