@@ -17,6 +17,7 @@ app.use(express.json());
 // });
 // testControllerの記述
 app.use("/test", testController);
+// app.use("/post", postController);
 
 const cors = require("cors");
 app.use(function (req, res, next) {

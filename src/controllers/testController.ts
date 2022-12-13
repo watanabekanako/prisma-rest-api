@@ -34,14 +34,20 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 //PUT /test
-router.put("/", async (req: Request, res: Response) => {
+// router.put("/:id", async (req: Request, res: Response) => {
+//   const test = await prisma.test.update({
+//     where: {
+//       id: Number(req.params.id),
+//     },
+//   });
+//   res.json({ test });
+// });
+router.put("/:id", async (req: Request, res: Response) => {
   const test = await prisma.test.update({
     where: {
-      id: 1,
-    },
-    data: {
-      name: "伊藤",
+      id: Number(req.params.id),
     },
   });
+  res.json({ test });
 });
 export default router;
