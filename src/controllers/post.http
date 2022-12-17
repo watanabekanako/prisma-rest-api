@@ -1,0 +1,66 @@
+GET http://localhost:3000
+###
+POST http://localhost:3000
+Content-Type: application/json
+
+{"title":"タイトル"}
+
+###
+POST http://localhost:3000/test
+Content-Type: application/json
+
+{
+  "test": [
+    {
+      "id": 2,
+      "name": "佐藤"
+    }
+  ]
+}
+
+###
+GET  http://localhost:3000/test
+Content-Type: application/json
+
+###
+DELETE   http://localhost:3000/test
+Content-Type: application/json
+
+###
+
+PUT  http://localhost:3000/test
+Content-Type: application/json
+
+
+###
+GET http://localhost:3000/posts
+Content-Type: application/json
+
+###
+GET http://localhost:3000/posts/2
+Content-Type: application/json
+
+
+###
+
+POST  http://localhost:3000/posts
+Content-Type: application/json
+
+
+
+  {
+    "title":"qqqq",
+    "description":"aaaaa",
+    "categoryId":1
+  }
+
+
+###
+GET http://localhost:3000/posts/categories
+Content-Type: application/json
+
+
+###
+
+GET http://localhost:3000/posts/tag
+Content-Type: application/json
