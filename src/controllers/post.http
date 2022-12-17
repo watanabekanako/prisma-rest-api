@@ -58,3 +58,9 @@ Content-Type: application/json
 ###
 GET http://localhost:3000/posts/categories
 Content-Type: application/json
+
+
+###
+
+GET http://localhost:3000/posts/tag
+Content-Type: application/json

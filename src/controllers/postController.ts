@@ -65,7 +65,10 @@ router.post("/", async (req: Request, res: Response) => {
 // tags
 // GET /tags/
 // タグの一覧 数いらないからfindManyで
-
+router.get("/tag", async (req: Request, res: Response) => {
+  const tags = await prisma.tag.findMany();
+  res.json({ tags });
+});
 // POST /tags/
 // タグの作成
 
