@@ -3,9 +3,11 @@ import express from "express";
 import userController from "./controllers/userController";
 import testController from "./controllers/testController";
 import postController from "./controllers/postController";
+import cors from "cors";
 // const prisma = new PrismaClient();
 
 const app = express();
+app.use(cors({ origin: ["http://localhost:3001"] }));
 app.use(express.json());
 // app.use("/users", userController);
 // app.get("/", (req, res) => {
@@ -20,9 +22,5 @@ app.use(express.json());
 app.use("/test", testController);
 // postControllerの記述
 app.use("/posts", postController);
-const cors = require("cors");
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+
 export default app;
