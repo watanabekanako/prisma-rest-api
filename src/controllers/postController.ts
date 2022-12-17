@@ -43,6 +43,10 @@ router.get("/:id", async (req: Request, res: Response) => {
     where: {
       id: Number(req.params.id),
     },
+    // relationのときはinclude使用して取得
+    include: {
+      category: true,
+    },
   });
   res.json({ post });
 });
