@@ -50,22 +50,26 @@ router.get("/tags", async (req: Request, res: Response) => {
 // GET /posts
 // ブログ記事の一覧 コンテントは不要
 router.get("/", async (req: Request, res: Response) => {
-  const post = await prisma.post.findMany({
+  const posts = await prisma.post.findMany({
     include: {
       category: true,
-    },
-  });
-  const tags = await prisma.tagsOnPosts.findMany({
-    select: {
-      tag: {
-        select: {
-          name: true,
-          id: true,
+      tags: {
+        include: {
+          tag: true,
         },
       },
     },
   });
-  res.json({ post: { ...post, tags: tags.map((v) => v.tag) } });
+  res.json({
+    post: posts.map((post) => ({
+      // タグ以外はそのまま返す
+      ...post,
+      // タグは入れ子になっているので`tag: [{id: 1, name: "hoge"}]`の形になるように変換
+      tags: post.tags.map((tag) => ({
+        ...tag.tag,
+      })),
+    })),
+  });
 });
 // GET /posts/:id
 // ブログ記事の取得(一つ)
