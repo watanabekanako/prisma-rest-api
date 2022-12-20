@@ -55,7 +55,17 @@ router.get("/", async (req: Request, res: Response) => {
       category: true,
     },
   });
-  res.json({ post });
+  const tags = await prisma.tagsOnPosts.findMany({
+    select: {
+      tag: {
+        select: {
+          name: true,
+          id: true,
+        },
+      },
+    },
+  });
+  res.json({ post: { ...post, tags: tags.map((v) => v.tag) } });
 });
 // GET /posts/:id
 // ブログ記事の取得(一つ)
