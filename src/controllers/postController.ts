@@ -27,13 +27,34 @@ router.get("/categories", async (req: Request, res: Response) => {
   });
   res.json({ categories });
 });
+//  GET タグ一覧;
+router.get("/tags", async (req: Request, res: Response) => {
+  // prisma.categoryでcategoryテーブルに対する操作
+  const tags = await prisma.tag.findMany({
+    // includeはrelationを取得
+    include: {
+      _count: {
+        // _countは紐づく投稿の数
+        select: {
+          // postsはCategoryテーブルのposts
+          posts: true,
+        },
+      },
+    },
+  });
+  res.json({ tags });
+});
 
 // post
 
 // GET /posts
 // ブログ記事の一覧 コンテントは不要
 router.get("/", async (req: Request, res: Response) => {
-  const post = await prisma.post.findMany();
+  const post = await prisma.post.findMany({
+    include: {
+      category: true,
+    },
+  });
   res.json({ post });
 });
 // GET /posts/:id
@@ -64,6 +85,7 @@ router.get("/:id", async (req: Request, res: Response) => {
   // : tags.map((v) => v.tag)
   res.json({ post: { ...post, tags: tags.map((v) => v.tag) } });
 });
+
 // POST /posts
 // ブログ記事の作成
 // サムネイルの画像はURLで指定
@@ -79,15 +101,5 @@ router.post("/", async (req: Request, res: Response) => {
   });
   res.json({ post });
 });
-
-// tags
-// GET /tags/
-// タグの一覧 数いらないからfindManyで
-router.get("/tag", async (req: Request, res: Response) => {
-  const tags = await prisma.tag.findMany();
-  res.json({ tags });
-});
-// POST /tags/
-// タグの作成
 
 export default router;
