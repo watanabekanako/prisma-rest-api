@@ -27,6 +27,7 @@ router.get("/categories", async (req: Request, res: Response) => {
   });
   res.json({ categories });
 });
+
 //  GET タグ一覧;
 router.get("/tags", async (req: Request, res: Response) => {
   // prisma.categoryでcategoryテーブルに対する操作
@@ -51,13 +52,20 @@ router.get("/tags", async (req: Request, res: Response) => {
 // ブログ記事の一覧 コンテントは不要
 router.get("/", async (req: Request, res: Response) => {
   const posts = await prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       category: true,
+
       tags: {
         include: {
           tag: true,
         },
       },
+    },
+    where: {
+      categoryId: req.query.category ? Number(req.query.category) : undefined,
     },
   });
   res.json({
