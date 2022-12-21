@@ -67,6 +67,7 @@ router.get("/", async (req: Request, res: Response) => {
     where: {
       categoryId: req.query.category ? Number(req.query.category) : undefined,
     },
+    take: req.query.count ? Number(req.query.count) : undefined,
   });
   res.json({
     post: posts.map((post) => ({
@@ -87,6 +88,7 @@ router.get("/:id", async (req: Request, res: Response) => {
       id: Number(req.params.id),
     },
     // relationのときはinclude使用して取得
+
     include: {
       category: true,
     },
