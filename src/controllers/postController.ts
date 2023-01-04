@@ -46,8 +46,6 @@ router.get("/tags", async (req: Request, res: Response) => {
   res.json({ tags });
 });
 
-// post
-
 // GET /posts
 // ブログ記事の一覧 コンテントは不要
 
@@ -58,6 +56,7 @@ router.get("/", async (req: Request, res: Response) => {
     // ページごとの表示件数
     perPage,
   } = req.query;
+
   // if (req.query.tagId) {
   //   const relations = await prisma.tagsOnPosts.findMany({
   //     where: {
@@ -69,6 +68,7 @@ router.get("/", async (req: Request, res: Response) => {
   // const postIds = relations.map((row) => row.postId);
 
   const posts = await prisma.post.findMany({
+    // take: 10,
     orderBy: {
       createdAt: "desc",
     },
@@ -92,15 +92,15 @@ router.get("/", async (req: Request, res: Response) => {
       //   in: postIds,
       // },
     },
+
     take: req.query.count ? Number(req.query.count) : undefined,
   });
-
+  // aggregateは集計条件に合致する条件の抽出が可能
   const count = await prisma.post.aggregate({
     _count: true,
     where: {
       categoryId: req.query.category ? Number(req.query.category) : undefined,
     },
-    take: req.query.count ? Number(req.query.count) : undefined,
   });
   res.json({
     post: posts.map((post) => ({
@@ -113,7 +113,7 @@ router.get("/", async (req: Request, res: Response) => {
     })),
     // 全部で何件あるのか
     totalCount: count._count,
-    // perPageがあればNumber型に直して指定、無ければデフォルトの件数(10件)を指定
+    // // perPageがあればNumber型に直して指定、無ければデフォルトの件数(10件)を指定
     pages: count._count / (perPage ? Number(perPage) : 10),
   });
 });
