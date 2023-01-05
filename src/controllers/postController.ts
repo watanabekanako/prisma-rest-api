@@ -93,7 +93,7 @@ router.get("/", async (req: Request, res: Response) => {
       // },
     },
 
-    take: req.query.count ? Number(req.query.count) : undefined,
+    take: perPage ? Number(perPage) : 10,
   });
   // aggregateは集計条件に合致する条件の抽出が可能
   const count = await prisma.post.aggregate({
@@ -114,7 +114,7 @@ router.get("/", async (req: Request, res: Response) => {
     // 全部で何件あるのか
     totalCount: count._count,
     // // perPageがあればNumber型に直して指定、無ければデフォルトの件数(10件)を指定
-    pages: count._count / (perPage ? Number(perPage) : 10),
+    pages: Math.ceil(count._count / (perPage ? Number(perPage) : 10)),
   });
 });
 
