@@ -66,9 +66,9 @@ router.get("/", async (req: Request, res: Response) => {
   // }
 
   // const postIds = relations.map((row) => row.postId);
-
+  const selectedPerPage = perPage ? Number(perPage) : 10;
+  const selectedPage = page ? Number(page) : 1;
   const posts = await prisma.post.findMany({
-    // take: 10,
     orderBy: {
       createdAt: "desc",
     },
@@ -93,7 +93,8 @@ router.get("/", async (req: Request, res: Response) => {
       // },
     },
 
-    take: perPage ? Number(perPage) : 10,
+    take: selectedPerPage,
+    skip: (selectedPage - 1) * Number(perPage),
   });
   // aggregateは集計条件に合致する条件の抽出が可能
   const count = await prisma.post.aggregate({
