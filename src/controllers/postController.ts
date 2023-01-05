@@ -114,7 +114,8 @@ router.get("/", async (req: Request, res: Response) => {
     // 全部で何件あるのか
     totalCount: count._count,
     // // perPageがあればNumber型に直して指定、無ければデフォルトの件数(10件)を指定
-    pages: count._count / (perPage ? Number(perPage) : 10),
+    pages: Math.ceil(count._count / (perPage ? Number(perPage) : 10)),
+    take: req.query.perPage ? Number(req.query.perPage) : undefined,
   });
 });
 
