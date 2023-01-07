@@ -164,5 +164,12 @@ router.post("/", async (req: Request, res: Response) => {
   });
   res.json({ post });
 });
-
+router.delete("/:id", async (req: Request, res: Response) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.json({ post });
+});
 export default router;
