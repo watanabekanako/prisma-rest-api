@@ -69,3 +69,7 @@ Content-Type: application/json
 ###
 GET GET http://localhost:3000/posts?count=3
 Content-Type: application/json
+
+
+###
+DELETE 
