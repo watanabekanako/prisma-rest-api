@@ -170,15 +170,30 @@ router.delete("/:id", async (req: Request, res: Response) => {
       id: Number(req.params.id),
     },
   });
+  if (!post) {
+    throw new Error("");
+  }
+  await prisma.post.delete({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
   res.json({ post });
 });
 
 //PUT /posts
 // ブログ記事の更新
 router.put("/:id", async (req: Request, res: Response) => {
-  const post = await prisma.post.findUnique({
+  const post = await prisma.post.update({
     where: {
       id: Number(req.params.id),
+    },
+    data: {
+      id: Number(req.params.id),
+      title: req.body.title,
+      description: req.body.description,
+      categoryId: req.body.categoryId,
+      content: req.body.content,
     },
   });
   res.json({ post });
