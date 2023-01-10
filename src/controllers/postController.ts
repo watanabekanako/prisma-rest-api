@@ -94,7 +94,7 @@ router.get("/", async (req: Request, res: Response) => {
     },
 
     take: selectedPerPage,
-    skip: (selectedPage - 1) * Number(perPage),
+    skip: (selectedPage - 1) * selectedPerPage,
   });
   // aggregateは集計条件に合致する条件の抽出が可能
   const count = await prisma.post.aggregate({
@@ -172,4 +172,16 @@ router.delete("/:id", async (req: Request, res: Response) => {
   });
   res.json({ post });
 });
+
+//PUT /posts
+// ブログ記事の更新
+router.put("/:id", async (req: Request, res: Response) => {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.json({ post });
+});
+
 export default router;
