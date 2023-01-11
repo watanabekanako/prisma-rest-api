@@ -72,13 +72,26 @@ Content-Type: application/json
 
 
 ###
-DELETE  http://localhost:3000/posts/2
+DELETE  http://localhost:3000/posts/20
 Content-Type: application/json
 
 
 ###
 
 PUT http://localhost:3000/posts/2
+Content-Type: application/json
+
+
+
+  {
+  
+    "title":"kousin",
+    "description":"aaaaa",
+    "categoryId":1
+  }
+
+###
+POST http://localhost:3000/posts/
 Content-Type: application/json
 
 

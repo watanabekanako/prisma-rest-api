@@ -155,21 +155,24 @@ router.get("/:id", async (req: Request, res: Response) => {
 // ブラウザからのリクエストを受け取る:req
 // ブラウザ＝フロント側
 router.post("/", async (req: Request, res: Response) => {
+  console.log("aaa");
   const post = await prisma.post.create({
     data: {
       title: req.body.title,
-      description: req.body.description,
+      content: req.body.content,
       categoryId: req.body.categoryId,
     },
   });
   res.json({ post });
 });
+
 router.delete("/:id", async (req: Request, res: Response) => {
   const post = await prisma.post.findUnique({
     where: {
       id: Number(req.params.id),
     },
   });
+  console.log("id: ", req.params.id);
   if (!post) {
     throw new Error("");
   }
