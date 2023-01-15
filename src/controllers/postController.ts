@@ -94,7 +94,7 @@ router.get("/", async (req: Request, res: Response) => {
     },
 
     take: selectedPerPage,
-    skip: (selectedPage - 1) * Number(perPage),
+    skip: (selectedPage - 1) * selectedPerPage,
   });
   // aggregateは集計条件に合致する条件の抽出が可能
   const count = await prisma.post.aggregate({
@@ -155,21 +155,51 @@ router.get("/:id", async (req: Request, res: Response) => {
 // ブラウザからのリクエストを受け取る:req
 // ブラウザ＝フロント側
 router.post("/", async (req: Request, res: Response) => {
+  console.log("aaa");
   const post = await prisma.post.create({
     data: {
       title: req.body.title,
-      description: req.body.description,
+      content: req.body.content,
       categoryId: req.body.categoryId,
     },
   });
   res.json({ post });
 });
+
 router.delete("/:id", async (req: Request, res: Response) => {
   const post = await prisma.post.findUnique({
     where: {
       id: Number(req.params.id),
     },
   });
+  console.log("id: ", req.params.id);
+  if (!post) {
+    throw new Error("");
+  }
+  await prisma.post.delete({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
   res.json({ post });
 });
+
+//PUT /posts
+// ブログ記事更新
+router.put("/:id", async (req: Request, res: Response) => {
+  const post = await prisma.post.update({
+    where: {
+      id: Number(req.params.id),
+    },
+    data: {
+      id: Number(req.params.id),
+      title: req.body.title,
+      description: req.body.description,
+      categoryId: req.body.categoryId,
+      content: req.body.content,
+    },
+  });
+  res.json({ post });
+});
+
 export default router;

@@ -27,7 +27,7 @@ model Post {
   published    Boolean       @default(false)
   author       User?         @relation(fields: [authorId], references: [id])
   authorId     Int?
-  category     Category      @relation(fields: [categoryId], references: [id])
+  category     Category      @relation(fields: [categoryId], references: [id],onDelete: Cascade)
   categoryId   Int
   tags         TagsOnPosts[]
   createdAt    DateTime      @default(now())
@@ -47,9 +47,9 @@ model Tag {
 }
 
 model TagsOnPosts {
-  post   Post @relation(fields: [postId], references: [id])
+  post   Post @relation(fields: [postId], references: [id],onDelete: Cascade)
   postId Int
-  tag    Tag  @relation(fields: [tagId], references: [id])
+  tag    Tag  @relation(fields: [tagId], references: [id],onDelete: Cascade)
   tagId  Int
 
   @@id([postId, tagId])
