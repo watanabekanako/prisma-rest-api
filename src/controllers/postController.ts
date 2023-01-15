@@ -185,7 +185,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 //PUT /posts
-// ブログ記事の更新
+// ブログ記事更新
 router.put("/:id", async (req: Request, res: Response) => {
   const post = await prisma.post.update({
     where: {
