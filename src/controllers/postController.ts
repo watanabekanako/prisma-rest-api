@@ -155,7 +155,23 @@ router.get("/:id", async (req: Request, res: Response) => {
 // ブラウザからのリクエストを受け取る:req
 // ブラウザ＝フロント側
 router.post("/", async (req: Request, res: Response) => {
-  console.log("aaa");
+  const tags = req.body.tags;
+  // 新規追加するタグ
+  const newTags = tags?.filter((tag: any) => !tag.id) ?? [];
+  // 既存のタグ
+  const existTags = tags?.filter((tag: any) => tag.id) ?? [];
+
+  let newTagRecs = [];
+  // 新規追加するタグがあるならTagテーブルに追加
+  if (newTags.length) {
+    newTagRecs = await Promise.all(newTags.map((tag: any) => {
+      return prisma.tag.create({
+        data: tag,
+      });
+    }));
+  }
+
+  // 投稿の作成
   const post = await prisma.post.create({
     data: {
       title: req.body.title,
@@ -163,6 +179,23 @@ router.post("/", async (req: Request, res: Response) => {
       categoryId: req.body.categoryId,
     },
   });
+
+  // タグの紐付け
+  const insertTagData = [
+    ...newTagRecs.map((r) => ({
+      postId: post.id,
+      tagId: r.id,
+    })),
+    ...existTags.map((r: any) => ({
+      postId: post.id,
+      tagId: r.id,
+    })),
+  ];
+  if (insertTagData.length > 0) {
+    await prisma.tagsOnPosts.createMany({
+      data: insertTagData,
+    });
+  }
   res.json({ post });
 });
 
