@@ -222,6 +222,25 @@ router.delete("/:id", async (req: Request, res: Response) => {
 //PUT /posts
 // ブログ記事更新
 router.put("/:id", async (req: Request, res: Response) => {
+  const tags = req.body.tags;
+  // 新規追加するタグ
+  const newTags = tags?.filter((tag: any) => !tag.id) ?? [];
+  // 既存のタグ
+  const existTags = tags?.filter((tag: any) => tag.id) ?? [];
+
+  let newTagRecs = [];
+  // 新規追加するタグがあるならTagテーブルに追加
+  if (newTags.length) {
+    newTagRecs = await Promise.all(
+        newTags.map((tag: any) => {
+          return prisma.tag.create({
+            data: tag,
+          });
+        })
+    );
+  }
+
+  // postテーブルの更新
   const post = await prisma.post.update({
     where: {
       id: Number(req.params.id),
@@ -232,20 +251,34 @@ router.put("/:id", async (req: Request, res: Response) => {
       description: req.body.description,
       categoryId: req.body.categoryId,
       content: req.body.content,
-      tags: req.body.tags.map((data: any) => {
-        return data.name;
-      }),
-    },
+    }
   });
 
-  res.json({ post });
+  // タグの紐付け
+  const insertTagData = [
+    ...newTagRecs.map((r) => ({
+      postId: post.id,
+      tagId: r.id,
+    })),
+    ...existTags.map((r: any) => ({
+      postId: post.id,
+      tagId: r.id,
+    })),
+  ];
+  // 指定した投稿とタグの紐付けを一旦全て削除
+  await prisma.tagsOnPosts.deleteMany({
+    where: {
+      postId: Number(req.params.id)
+    }
+  });
+  // 追加したいタグがあれば紐付ける
+  if (insertTagData.length > 0) {
+    await prisma.tagsOnPosts.createMany({
+      data: insertTagData,
+    });
+  }
 
-  console.log(
-    "data.name",
-    req.body.tags.map((data: any) => {
-      return data.name;
-    })
-  );
+  res.json({ post });
 });
 
 export default router;
