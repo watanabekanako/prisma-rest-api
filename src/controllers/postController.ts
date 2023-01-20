@@ -164,11 +164,13 @@ router.post("/", async (req: Request, res: Response) => {
   let newTagRecs = [];
   // 新規追加するタグがあるならTagテーブルに追加
   if (newTags.length) {
-    newTagRecs = await Promise.all(newTags.map((tag: any) => {
-      return prisma.tag.create({
-        data: tag,
-      });
-    }));
+    newTagRecs = await Promise.all(
+      newTags.map((tag: any) => {
+        return prisma.tag.create({
+          data: tag,
+        });
+      })
+    );
   }
 
   // 投稿の作成
@@ -230,9 +232,20 @@ router.put("/:id", async (req: Request, res: Response) => {
       description: req.body.description,
       categoryId: req.body.categoryId,
       content: req.body.content,
+      tags: req.body.tags.map((data: any) => {
+        return data.name;
+      }),
     },
   });
+
   res.json({ post });
+
+  console.log(
+    "data.name",
+    req.body.tags.map((data: any) => {
+      return data.name;
+    })
+  );
 });
 
 export default router;
