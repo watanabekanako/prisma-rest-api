@@ -67,27 +67,26 @@ Content-Type: application/json
 
 
 ###
-GET GET http://localhost:3000/posts?count=3
+GET http://localhost:3000/posts?count=3
 Content-Type: application/json
 
 
 ###
-DELETE  http://localhost:3000/posts/20
+DELETE  http://localhost:3000/posts/１
 Content-Type: application/json
-
 
 ###
-
-PUT http://localhost:3000/posts/2
+PUT http://localhost:3000/posts/1
 Content-Type: application/json
-
-
 
   {
-  
     "title":"kousin",
     "description":"aaaaa",
-    "categoryId":1
+    "categoryId":1,
+    "tags": [
+  {"id": 1, "name": "hoge"},
+  {"name": "new"}
+]
   }
 
 ###
@@ -97,8 +96,7 @@ Content-Type: application/json
 
 
   {
-  
     "title":"kousin",
     "description":"aaaaa",
-    "categoryId":1
+    "categoryId":1,
   }
