@@ -281,10 +281,10 @@ router.put("/:id", async (req: Request, res: Response) => {
   res.json({ post });
 });
 
-// post /categories
+// post / categories;
 router.post("/categories", async (req: Request, res: Response) => {
   // 投稿の作成
-  console.log("req", req);
+  console.log("req", req.body);
   const categories = await prisma.category.create({
     data: {
       name: req.body.name,
@@ -294,4 +294,36 @@ router.post("/categories", async (req: Request, res: Response) => {
   res.json({ categories });
 });
 
+// put /categories
+router.put("/categories/:id", async (req: Request, res: Response) => {
+  console.log(req.params);
+  const categories = await prisma.category.update({
+    where: {
+      id: Number(req.params.id),
+    },
+    data: {
+      name: req.body.name,
+    },
+  });
+  res.json({ categories });
+});
+
+// put /categories
+router.delete("/categories/:id", async (req: Request, res: Response) => {
+  console.log(req.params);
+  const categories = await prisma.category.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  if (!categories) {
+    throw new Error("");
+  }
+  await prisma.category.delete({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.json({ categories });
+});
 export default router;

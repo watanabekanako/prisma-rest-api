@@ -1,4 +1,4 @@
-GET http://localhost:3000
+、GET http://localhost:3000
 ###
 POST http://localhost:3000
 Content-Type: application/json
@@ -103,12 +103,25 @@ Content-Type: application/json
 
 
 ###
-POST  http://localhost:3000/posts/localhost:3000/posts/categories
+POST  http://localhost:3000/posts/categories
 Content-Type: application/json
 
-{
-  "categories": 
-    {
-      "name": "新しいカテゴリ"
-    }
-}
+  {
+    "name":"名前"
+  }
+
+
+
+###
+PUT  http://localhost:3000/posts/categories/4
+Content-Type: application/json
+
+  {
+    "name":"新しい名前5"
+  }
+
+
+
+###
+DELETE  http://localhost:3000/posts/categories/4
+Content-Type: application/json
