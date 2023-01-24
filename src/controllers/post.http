@@ -100,3 +100,15 @@ Content-Type: application/json
     "description":"aaaaa",
     "categoryId":1,
   }
+
+
+###
+POST  http://localhost:3000/posts/localhost:3000/posts/categories
+Content-Type: application/json
+
+{
+  "categories": 
+    {
+      "name": "新しいカテゴリ"
+    },
+}

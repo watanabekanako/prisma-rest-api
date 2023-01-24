@@ -232,11 +232,11 @@ router.put("/:id", async (req: Request, res: Response) => {
   // 新規追加するタグがあるならTagテーブルに追加
   if (newTags.length) {
     newTagRecs = await Promise.all(
-        newTags.map((tag: any) => {
-          return prisma.tag.create({
-            data: tag,
-          });
-        })
+      newTags.map((tag: any) => {
+        return prisma.tag.create({
+          data: tag,
+        });
+      })
     );
   }
 
@@ -251,7 +251,7 @@ router.put("/:id", async (req: Request, res: Response) => {
       description: req.body.description,
       categoryId: req.body.categoryId,
       content: req.body.content,
-    }
+    },
   });
 
   // タグの紐付け
@@ -268,8 +268,8 @@ router.put("/:id", async (req: Request, res: Response) => {
   // 指定した投稿とタグの紐付けを一旦全て削除
   await prisma.tagsOnPosts.deleteMany({
     where: {
-      postId: Number(req.params.id)
-    }
+      postId: Number(req.params.id),
+    },
   });
   // 追加したいタグがあれば紐付ける
   if (insertTagData.length > 0) {
@@ -279,6 +279,19 @@ router.put("/:id", async (req: Request, res: Response) => {
   }
 
   res.json({ post });
+});
+
+// post /categories
+router.post("/categories", async (req: Request, res: Response) => {
+  // 投稿の作成
+  console.log("req", req);
+  const categories = await prisma.category.create({
+    data: {
+      name: req.body.name,
+    },
+  });
+
+  res.json({ categories });
 });
 
 export default router;
