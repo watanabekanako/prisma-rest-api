@@ -117,7 +117,7 @@ PUT  http://localhost:3000/posts/categories/4
 Content-Type: application/json
 
   {
-    "name":"新しい名前5"
+    "name":"新しい名前6"
   }
 
 
