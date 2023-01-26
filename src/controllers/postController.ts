@@ -327,3 +327,13 @@ router.delete("/categories/:id", async (req: Request, res: Response) => {
   res.json({ categories });
 });
 export default router;
+
+//get /category 単体
+router.get("/category/:id", async (req: Request, res: Response) => {
+  const category = await prisma.category.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+  });
+  res.json({ category });
+});
