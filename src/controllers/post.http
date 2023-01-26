@@ -125,3 +125,9 @@ Content-Type: application/json
 ###
 DELETE  http://localhost:3000/posts/categories/4
 Content-Type: application/json
+
+
+
+###
+GET http://localhost:3000/posts/category/1
+Content-Type: application/json
