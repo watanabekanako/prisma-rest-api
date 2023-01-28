@@ -14,6 +14,9 @@ const router = Router();
 router.get("/categories", async (req: Request, res: Response) => {
   // prisma.categoryでcategoryテーブルに対する操作
   const categories = await prisma.category.findMany({
+    orderBy: {
+      id: "asc",
+    },
     // includeはrelationを取得
     include: {
       _count: {
