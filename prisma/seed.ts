@@ -132,14 +132,13 @@ async function main() {
 
   await prisma.tagsOnPosts.createMany({
     data: [
-      {postId: post1.id, tagId: tag1.id },
-      {postId: post1.id, tagId: tag2.id },
-      {postId: post2.id, tagId: tag2.id },
-      {postId: post4.id, tagId: tag1.id },
-      {postId: post5.id, tagId: tag2.id },
+      { postId: post1.id, tagId: tag1.id },
+      { postId: post1.id, tagId: tag2.id },
+      { postId: post2.id, tagId: tag2.id },
+      { postId: post4.id, tagId: tag1.id },
+      { postId: post5.id, tagId: tag2.id },
     ],
   });
-
 }
 
 main()
