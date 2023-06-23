@@ -12,9 +12,9 @@ datasource db {
 
 model User {
   id    Int     @id @default(autoincrement())
+  name String
+  password String  
   email String  @unique
-  name  String
-  tel   String? @db.VarChar(11)
   posts Post[]
 }
 

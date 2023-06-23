@@ -6,9 +6,6 @@ const prisma = new PrismaClient();
 const router = Router();
 
 // 必要なエンドポイント
-
-// category
-// GET / categories/;
 // カテゴリ一覧
 // カテゴリに紐づくブログ記事の数も必要
 router.get("/categories", async (req: Request, res: Response) => {
@@ -58,8 +55,9 @@ router.get("/", async (req: Request, res: Response) => {
     page,
     // ページごとの表示件数
     perPage,
+    key,
   } = req.query;
-
+  // const { key } = req.body;
   // if (req.query.tagId) {
   //   const relations = await prisma.tagsOnPosts.findMany({
   //     where: {
@@ -67,10 +65,11 @@ router.get("/", async (req: Request, res: Response) => {
   //     },
   //   });
   // }
-
+  console.log(key, "req");
   // const postIds = relations.map((row) => row.postId);
-  const selectedPerPage = perPage ? Number(perPage) : 10;
+  const selectedPerPage = perPage ? Number(perPage) : 6;
   const selectedPage = page ? Number(page) : 1;
+  const searchWord = key ? String(key) : "";
   const posts = await prisma.post.findMany({
     orderBy: {
       createdAt: "desc",
@@ -84,6 +83,7 @@ router.get("/", async (req: Request, res: Response) => {
         },
       },
     },
+
     where: {
       categoryId: req.query.category ? Number(req.query.category) : undefined,
       // tagId: {
@@ -94,6 +94,9 @@ router.get("/", async (req: Request, res: Response) => {
       // id: {
       //   in: postIds,
       // },
+      title: {
+        contains: searchWord,
+      },
     },
 
     take: selectedPerPage,
@@ -333,6 +336,7 @@ export default router;
 
 //get /category 単体
 router.get("/categories/:id", async (req: Request, res: Response) => {
+  console.log(req.body, "params");
   const category = await prisma.category.findUnique({
     where: {
       id: Number(req.params.id),

@@ -1,4 +1,4 @@
-、GET http://localhost:3000
+
 ###
 POST http://localhost:3000
 Content-Type: application/json
@@ -126,6 +126,11 @@ Content-Type: application/json
 DELETE  http://localhost:3000/posts/categories/71
 Content-Type: application/json
 
+
+
+###
+GET http://localhost:3000/posts/categories/1
+Content-Type: application/json
 
 
 ###
